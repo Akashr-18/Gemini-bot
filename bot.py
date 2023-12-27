@@ -13,10 +13,10 @@ def get_gemini_response(question):
     return response.text
 
 st.set_page_config(page_title='Q&A demo')
-st.header("Gemini Application")
+st.header("Gemini Text Bot")
 
 input = st.text_input("Input: ", key='input')
-button = st.button('Submit: ')
+button = st.button('Submit')
 
 if input and button:
     response = get_gemini_response(input)
