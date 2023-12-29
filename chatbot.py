@@ -10,8 +10,10 @@ genai.configure(api_key = os.getenv('GOOGLE_API_KEY'))
 
 model = genai.GenerativeModel('gemini-pro')
 chat = model.start_chat(history=[])
+resp = chat.send_message("Who is ms dhoni? Write a short note on him in less than 50 words")
+respo = resp.text
 
-def get_gemini_response(input):
+def get_gemini_response(input):    
     response = chat.send_message(input)
     return response.text
 
@@ -30,14 +32,20 @@ if input and submit:
     st.subheader("The Response is")
     st.write(response)
     st.session_state['chat_history'].append(("Bot", response))
+    st.subheader("Chat History: ")
+    for message in chat.history:
+        st.write(f'**{message.role}**: {message.parts[0].text}')
+    st.write(chat.history)
 
-st.subheader("Chat History")
+# st.subheader("Chat History: ")
 
-for message in chat.history:
-    st.write(f'**{message.role}**: {message.parts[0].text}')
+#Taking only current chat history
+# for message in chat.history:
+#     st.write(f'**{message.role}**: {message.parts[0].text}')
 
+# Just storing chat history in session state and displaying all at once . That's all
 # for role, text in st.session_state['chat_history']:
-#     st.write(f"{role}: {text}")
+#     st.write(f"**{role}**: {text}")
 
 # st.subheader("ZZZ")
 # st.write(chat.history)
